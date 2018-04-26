@@ -3,31 +3,49 @@
 
 import path = require('path');
 import util = require('util');
+import fs = require('fs');
 import residence = require('residence');
 import async = require('async');
-const root = residence.findProjectRoot(process.cwd());
+let cwd = process.cwd();
+let root = residence.findProjectRoot(cwd);
 import cp = require("child_process");
 
 let pckJSON;
 
 try {
   pckJSON = require(path.resolve(root + '/package.json'));
+  if (pckJSON.name === 'cambiasso') {
+    
+    const dir = path.dirname((path.resolve(root + '/../')));
+    
+    if(dir !== 'node_modules'){
+      console.log('done with cambiasso');
+      return;
+    }
+    
+    process.chdir('../../');  // go up two directories
+    cwd = process.cwd();
+    root = residence.findProjectRoot(cwd);
+    pckJSON = require(path.resolve(root + '/package.json'));
+  }
 }
 catch (err) {
-  throw new Error('cambiasso could not complete the postinstall routine - missing package.json file.');
+  console.error('cambiasso could not complete the postinstall routine - missing package.json file.');
+  console.error('current working directory:', cwd);
+  console.error('current project root:', root);
+  throw err;
 }
 
 const map = pckJSON.cambiasso || {};
 const keys = Object.keys(map);
 const home = String(process.env.HOME || '');
 
-
 async.eachLimit(keys, 3, function (k, cb) {
   
   const to = path.resolve(`${root}/node_modules/${k}`);
   const from = path.resolve(`${root}/${map[k]}`);
   
-  if(String(to).toUpperCase() === String(home).toUpperCase()){
+  if (String(to).toUpperCase() === String(home).toUpperCase()) {
     throw new Error('cambiasso refusing to rimraf home directory.');
   }
   
@@ -50,11 +68,10 @@ async.eachLimit(keys, 3, function (k, cb) {
   
 }, function (err) {
   
-  if(err){
+  if (err) {
     console.error(util.inspect(err));
     process.exit(1);
   }
-
-
+  
   console.log('cambiasso success.');
 });
