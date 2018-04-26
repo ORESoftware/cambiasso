@@ -1,0 +1,2 @@
+
+const bark = require('./bark');
