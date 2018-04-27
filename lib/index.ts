@@ -9,6 +9,7 @@ import async = require('async');
 let cwd = process.cwd();
 let root = residence.findProjectRoot(cwd);
 import cp = require("child_process");
+import {isValidDirname} from "./util";
 
 let pckJSON;
 
@@ -16,8 +17,13 @@ try {
   pckJSON = require(path.resolve(root + '/package.json'));
   if (pckJSON.name === 'cambiasso') {
     
-    const dir = path.dirname((path.resolve(root + '/../')));
-    
+    const dir = (path.resolve(root + '/../'));
+    const dirname = path.dirname(dir);
+    console.log('pwd:', process.cwd());
+    console.log('the dir:', dir);
+    console.log('the dirname:', dirname);
+  
+  
     if (dir !== 'node_modules') {
       console.log('done with cambiasso');
       process.exit(0);
@@ -41,6 +47,10 @@ const keys = Object.keys(map);
 const home = String(process.env.HOME || '');
 
 async.eachLimit(keys, 3, function (k, cb) {
+    
+    if (!isValidDirname(k)) {
+      throw new Error(`The following is not a valid directory name: "${k}".`)
+    }
     
     const to = path.resolve(`${root}/node_modules/${k}`);
     const from = path.resolve(`${root}/${map[k]}`);
