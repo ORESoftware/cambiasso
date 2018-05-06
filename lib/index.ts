@@ -11,6 +11,9 @@ let root = residence.findProjectRoot(cwd);
 import cp = require("child_process");
 import {isValidDirname} from "./util";
 
+const main = require.main.filename;
+console.log('require.main.filename:', main);
+
 let pckJSON;
 
 try {
