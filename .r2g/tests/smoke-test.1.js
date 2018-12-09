@@ -32,13 +32,7 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 
-const to = setTimeout(() => {
-  console.error('r2g phase-T test timed out.');
-  process.exit(1);
-}, 4000);
 
-
-/*
- your test goes here, e.g.:
- assert.strictEqual(true, false, 'whoops');
-*/
+const {test} = require('@cambiasso/util.js');
+assert.equal(test(),true, 'test call is not true.');
+process.exit(0);

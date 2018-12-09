@@ -1,6 +1,15 @@
+const a = {
+  "scripts": {
+    "test": "echo 'noop'"
+  }
+};
 
 
-const {isValidDirname} = require('../dist/util.js');
-// const bark = require('./bark');
+const b = {
+  "scripts": {
+    "postinstall": "cambiasso"
+  }
+};
 
-console.log(isValidDirname('foo'));
+
+const c = console.log(Object.assign({}, a, b));

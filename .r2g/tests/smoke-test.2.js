@@ -18,7 +18,8 @@ process.on('unhandledRejection', (reason, p) => {
   process.exit(1);
 });
 
-const to = setTimeout(() => {
-  console.error('r2g phase-T test timed out.');
-  process.exit(1);
-}, 4000);
+
+
+const {test} = require('@cambiasso/red/blue/green/util.js');
+assert.equal(test(),true, 'test call is not true.');
+process.exit(0);
