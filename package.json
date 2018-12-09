@@ -36,5 +36,8 @@
     "async": "^2.6.0",
     "chalk": "^2.4.1",
     "residence": "0.0.207"
+  },
+  "r2g": {
+    "test": "echo 'noop'"
   }
 }
