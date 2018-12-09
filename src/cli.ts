@@ -34,7 +34,6 @@ const commands = registry.list.map(v => {
   const mkdirpath = path.resolve(root + '/' + base);
   const dest = path.isAbsolute(v.dest) ? v.dest : path.resolve(root + '/' + v.dest);
   const src = path.isAbsolute(v.src) ? v.src : path.resolve(cwd + '/' + v.src);
-  console.error({src,dest});
   return `mkdir -p "${mkdirpath}" && ln -sf "${src}" "${dest}"`
 });
 
