@@ -1,16 +1,15 @@
 {
   "name": "cambiasso",
-  "version": "0.0.104",
+  "version": "0.0.105",
   "description": "Semver-oriented TypeScript library skeleton.",
   "bin": {
-    "cambiasso": "dist/index.js"
+    "cambiasso": "cli/cli.js"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "typings": "dist/index.d.ts",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "typings": "dist/main.d.ts",
   "scripts": {
-    "test": "suman test",
-    "postinstall": "dist/index.js"
+    "test": "suman test"
   },
   "repository": {
     "type": "git",
@@ -35,6 +34,7 @@
   },
   "dependencies": {
     "async": "^2.6.0",
+    "chalk": "^2.4.1",
     "residence": "0.0.207"
   }
 }
